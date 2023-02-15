@@ -25,13 +25,17 @@ class GFG {
 class Solution {
     int isPalindrome(String S) {
         // code here
-        int n=S.length();
-        int f=0,l=n-1;
-        while(f<l){
-            if(S.charAt(f)!=S.charAt(l))return 0;
-            
-            f++;l--;
-        }
-        return 1;
+        char ch[]=S.toCharArray();
+        int i=0;
+        int val=check(0,ch);
+        return val;
+    }
+    int  check(int i,char ch[]){
+        if(i>=ch.length/2)return 1;
+        if(ch[i]!=ch[ch.length-i-1])return 0;
+        return check(i+1,ch);
+        
+       
+        
     }
 }
