@@ -36,24 +36,39 @@ class Solution{
     ArrayList<Integer> subsetSums(ArrayList<Integer> arr, int N){
         // code here
         
-        ArrayList<Integer>ans=new ArrayList<>();
-        List<Integer>list=new ArrayList<>();
-        findSum(0,arr,ans,list);
-        return ans;
+        // ArrayList<Integer>ans=new ArrayList<>();
+        // List<Integer>list=new ArrayList<>();
+        // findSum(0,arr,ans,list);
+        // return ans;
+        ArrayList<Integer>res=new ArrayList<>();
+        findSum(0,0,arr,res);
+        return res;
     }
-    public void findSum(int idx,ArrayList<Integer>arr,ArrayList<Integer>ans,List<Integer>list){
+    public void findSum(int idx,int sum,ArrayList<Integer>arr,ArrayList<Integer>res){
         if(idx==arr.size()){
-            ans.add(sum(list));
+            res.add(sum);
             return;
         }
-        list.add(arr.get(idx));
-        findSum(idx+1,arr,ans,list);
-        list.remove(list.size()-1);
-        findSum(idx+1,arr,ans,list);
+        
+        //Not picking the element
+        findSum(idx+1,sum,arr,res);
+        
+        // Picking the element
+        findSum(idx+1,sum+arr.get(idx),arr,res);
     }
-    public int sum(List<Integer>list){
-        int s=0;
-        for(int x:list)s+=x;
-        return s;
-    }
+    // public void findSum(int idx,ArrayList<Integer>arr,ArrayList<Integer>ans,List<Integer>list){
+    //     if(idx==arr.size()){
+    //         ans.add(sum(list));
+    //         return;
+    //     }
+    //     list.add(arr.get(idx));
+    //     findSum(idx+1,arr,ans,list);
+    //     list.remove(list.size()-1);
+    //     findSum(idx+1,arr,ans,list);
+    // }
+    // public int sum(List<Integer>list){
+    //     int s=0;
+    //     for(int x:list)s+=x;
+    //     return s;
+    // }
 }
