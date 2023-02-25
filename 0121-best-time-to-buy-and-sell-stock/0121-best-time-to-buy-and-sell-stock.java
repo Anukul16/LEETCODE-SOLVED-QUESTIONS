@@ -9,9 +9,8 @@ class Solution {
             max_profit=Math.max(profit,max_profit);
         }
         return max_profit;
-
-
-
+        
+        
         // int ans=0;
 
         // for(int i=0;i<prices.length-1;i++){
@@ -25,5 +24,8 @@ class Solution {
         //     }
         // }
         // return ans;
+
+
+
     }
 }
