@@ -54,8 +54,28 @@ class Solution {
                 return true;
             }
         }
+        // here
         pathVisited[node]=false;
         return false;
     }
 }
 /* 
+
+We will have a visited and pathVisited array 
+
+We check from 0 to V ..... if we get visited[i]=false then call the dfs for that node
+
+In dfs function what we are doing is just 
+        At first mark both the array as visited
+        
+        Then iterating throuhg the current nodes adj list if that node is unvisited then 
+        call the dfs and so on
+        And keep in mind whenever at the time of return of any recursion make sure to unvsited 
+        the pathVistied array cause now you are not on that path
+        
+        And if anytime you encountered a situation where the node is visited and the pathVisited 
+        array is also visited, it means there is a cycle for sure..cause you started from that 
+        node now again you are on the node in a path
+
+
+*/
