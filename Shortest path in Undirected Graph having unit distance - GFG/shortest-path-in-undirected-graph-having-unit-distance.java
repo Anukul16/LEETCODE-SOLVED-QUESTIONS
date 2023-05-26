@@ -31,33 +31,45 @@ class GFG {
 
 class Solution {
     
-    public int[] shortestPath(int[][] edges,int n,int m ,int src) {
-        // Code here
-        ArrayList<ArrayList<Integer>>adj=new ArrayList<>();
-        for(int i=0;i<n;i++)adj.add(new ArrayList<>());
-        for(int i=0;i<m;i++){
+    public int[] shortestPath(int[][] edges, int n, int m, int src) {
+        // Create adjacency list to represent the graph
+        ArrayList<ArrayList<Integer>> adj = new ArrayList<>();
+        for (int i = 0; i < n; i++)
+            adj.add(new ArrayList<>());
+
+        // Build the adjacency list using the given edges
+        for (int i = 0; i < m; i++) {
             adj.get(edges[i][0]).add(edges[i][1]);
             adj.get(edges[i][1]).add(edges[i][0]);
         }
-        int[]distance=new int[n];
-        Arrays.fill(distance,101);
-        
-        Queue<Integer>q=new LinkedList<>();
+
+        // Initialize distance array to track the minimum distance from the source node
+        int[] distance = new int[n];
+        Arrays.fill(distance, 101); // Initialize with a large value (101 in this case)
+
+        // Perform Breadth-First Search to find the shortest path
+        Queue<Integer> q = new LinkedList<>();
         q.add(src);
-        distance[src]=0;
-        int k=0;
-        while(q.size()>0){
-            int node=q.poll();
-            for(int it:adj.get(node)){
-                if(distance[node]+1<distance[it]){
-                    distance[it]=1+distance[node];
+        distance[src] = 0; // Distance from the source node to itself is 0
+        while (q.size() > 0) {
+            int node = q.poll();
+            // Iterate through all the neighbors of the current node
+            for (int it : adj.get(node)) {
+                // Update the distance if a shorter path is found
+                if (distance[node] + 1 < distance[it]) {
+                    distance[it] = 1 + distance[node];
                     q.add(it);
                 }
             }
         }
-        for(int i=0;i<n;i++){
-            if(distance[i]==101)distance[i]=-1;
+
+        // Convert any remaining nodes with distance 101 to -1 (indicating unreachable nodes)
+        for (int i = 0; i < n; i++) {
+            if (distance[i] == 101)
+                distance[i] = -1;
         }
+
+        // Return the array of minimum distances from the source node
         return distance;
     }
 }
