@@ -116,22 +116,21 @@ class Solution
 {
     //Function to find the least absolute difference between any node
     //value of the BST and the given integer.
-    static int ans;
     static int minDiff(Node  root, int k) 
     { 
         // Write your code here
-        ans=Integer.MAX_VALUE;
-        dfs(root,k);
-        return ans;
+        return helper(root,k);
     } 
-    static void dfs(Node root,int k){
-        if(root==null)return ;
-        dfs(root.left,k);
-        ans=Math.min(ans,Math.abs(k-root.data));
-        dfs(root.right,k);
-        // System.out.println("Root.Data: "+root.data);
+    static int helper(Node root, int k){
+        if(root==null)return Integer.MAX_VALUE;
         
-        // System.out.println("Ans: "+ans);
+        if(root.data==k)return 0;
+        
+        if(root.data<k){
+            return Math.min(k-root.data,helper(root.right,k));
+        }
+        return Math.min(root.data-k,helper(root.left,k));
     }
+    
 }
 
