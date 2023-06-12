@@ -32,39 +32,38 @@ class GFG
 class Solution
 {
     //Function to find minimum time required to rot all oranges. 
-    public void dfs(int r,int c,int[][]grid,int time){
-        if(r<0 || r==grid.length || c<0 || c==grid[0].length || grid[r][c]==0 || (grid[r][c]>1 && grid[r][c]<time)){
-            return;
-        }
-        
-        grid[r][c]=time;
-        
-        dfs(r-1,c,grid,time+1);
-        dfs(r,c+1,grid,time+1);
-        dfs(r+1,c,grid,time+1);
-        dfs(r,c-1,grid,time+1);
-    }
+
     public int orangesRotting(int[][] grid)
     {
-        // Code here
-        int n=grid.length;
-        int m=grid[0].length;
-        
-        for(int i=0;i<n;i++){
-            for(int j=0;j<m;j++){
-                if(grid[i][j]==2){
-                    dfs(i,j,grid,2);
-                }
+        //iterate though each cell
+        for(int i=0;i<grid.length;i++){
+            for(int j=0;j<grid[0].length;j++){
+                //if rotten (i.e)grid[i][j]=2 -> search adjacent cells
+                if(grid[i][j]==2) dfs(grid,i,j,2);
             }
         }
-        int ans=2;
-        for(int a[]:grid){
-            for(int val:a){
-                if(val==1)return -1;
-                ans=Math.max(ans,val);
+        //initialise time to 2 (since min value of rotten is 2)
+        int time=2;
+        for(int[] i: grid){
+            for(int j: i){
+                if(j==1) return -1;
+                time=Math.max(time,j);
             }
         }
-        
-        return ans-2;
+        //subtract 2 from time(since we initialised as 2)
+        return time-2; 
+
+    }
+
+    void dfs(int[][] grid,int i,int j,int rot){
+        //here the last condition checks whether we visited the cell or already rooten or not (since if rooten min val=2)
+        if(i<0 || j<0 || i>=grid.length || j>=grid[0].length || grid[i][j]==0 || (grid[i][j]>1 && grid[i][j]< rot)) return;
+        //if not rotten make the cell rotten
+        grid[i][j]=rot;
+        //incement rotten count to each cell so that we can find time
+        this.dfs(grid,i+1,j,rot+1);
+        this.dfs(grid,i-1,j,rot+1);
+        this.dfs(grid,i,j+1,rot+1);
+        this.dfs(grid,i,j-1,rot+1);
     }
 }
