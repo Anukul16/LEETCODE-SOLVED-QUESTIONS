@@ -41,19 +41,24 @@ class Solution
     {
         // Code here
         
-        HashSet<Integer> set = new HashSet<>();
+        int max = Arrays.stream(nums).max().getAsInt();
+        int[] hash = new int[max + 1];
+        
         for (int num : nums) {
-            if (!set.add(num)) {
-                set.remove(num);
+            hash[num]++;
+        }
+        
+        ArrayList<Integer> list = new ArrayList<>();
+        for (int num : nums) {
+            if (hash[num] == 1) {
+                list.add(num);
             }
         }
         
-        int[] ans = new int[set.size()];
-        int index = 0;
-        for (int num : set) {
-            ans[index++] = num;
+        int[] ans = new int[list.size()];
+        for (int i = 0; i < list.size(); i++) {
+            ans[i] = list.get(i);
         }
-        
         Arrays.sort(ans);
         return ans;
     }
