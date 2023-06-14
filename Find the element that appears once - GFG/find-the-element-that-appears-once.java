@@ -34,18 +34,10 @@ class Sol
     public static int search(int A[], int N)
     {
         // your code here
-        if(N==100001)return 1508;
-        int maxVal = 0;
-        for (int i = 0; i < N; i++) {
-            maxVal = Math.max(maxVal, A[i]);
-        }
-
-        int[] arr = new int[maxVal + 1];
-        for(int i=0;i<N;i++){
-            arr[A[i]]++;
-        }
-        for(int i=0;i<arr.length;i++){
-            if(arr[i]==1)return i;
+        HashMap<Integer,Integer>map=new HashMap<>();
+        for(int x:A)map.put(x,map.getOrDefault(x,0)+1);
+        for(Map.Entry<Integer,Integer>e:map.entrySet()){
+            if(e.getValue()==1)return e.getKey();
         }
         return -1;
     }
