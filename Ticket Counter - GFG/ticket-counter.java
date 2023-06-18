@@ -26,24 +26,13 @@ class GFG{
 class Solution {
     public static int distributeTicket(int N,int K)
     {
-        ArrayDeque<Integer>q=new ArrayDeque<>();
-        
-        for(int i=1;i<=N;i++)q.add(i);
-        boolean flag=true;
-        int ans=-1;
-        while(q.size()>0){
-            
-            if(flag){
-                for(int i=1;i<=K && q.size()>0;i++){
-                    ans=q.pollFirst();
-                }
-            }else{
-                for(int i=1;i<=K && q.size()>0;i++){
-                    ans=q.pollLast();
-                }
-            }
-            flag=!flag;
+        int start=1,end=N;
+        while(start<end){
+            int time=K;
+            while(start<end &&time-- > 0)start++;
+            time=K;
+            while(start<end && time-- > 0)end--;
         }
-        return ans;
+        return start;
     }
 }
