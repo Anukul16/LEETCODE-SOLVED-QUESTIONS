@@ -32,31 +32,30 @@ class GFG{
 
 //User function Template for Java
 
-class Solution {
-    static Integer[][] dp;
-
-    static int knapSack(int N, int W, int val[], int wt[]) {
-        dp = new Integer[N + 1][W + 1];
-        return helper(N, W, val, wt);
+class Solution{
+    static Integer dp[][];
+    static int knapSack(int N, int W, int val[], int wt[])
+    {
+        // code here
+        dp=new Integer[N+1][W+1];
+        return helper(N,W,val,wt);
+        
     }
-
-    static int helper(int N, int W, int val[], int wt[]) {
-        if (N == 0 || W == 0)
-            return 0;
-
-        if (dp[N][W] != null)
-            return dp[N][W];
-
-        int max = -1;
-        if (wt[N - 1] <= W) {
-            int pick = val[N - 1] + helper(N, W - wt[N - 1], val, wt);
-            int notPick = helper(N - 1, W, val, wt);
-            max = Math.max(pick, notPick);
-        } else {
-            max = helper(N - 1, W, val, wt);
+    static int helper(int N,int W,int val[],int wt[]){
+        if(N==0 || W==0)return 0;
+        if(dp[N][W] != null) return dp[N][W];
+        int max=-1;
+        
+        if(wt[N-1]<=W){
+            int pick=val[N-1]+helper(N,W-wt[N-1],val,wt);
+            
+            int notPick=helper(N-1,W,val,wt);
+            
+            max=Math.max(pick,notPick);
+        }else if(wt[N-1]>W){
+            max=helper(N-1,W,val,wt);
         }
-
-        dp[N][W] = max;
+        dp[N][W]=max;
         return max;
     }
 }
