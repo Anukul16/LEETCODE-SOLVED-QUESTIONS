@@ -34,25 +34,33 @@ class GFG {
 
 class Solution {
     // Function to detect cycle in an undirected graph.
-    // just do a dry run will get over it
     public boolean isCycle(int V, ArrayList<ArrayList<Integer>> adj) {
         // Code here
-       boolean[]visited=new boolean[V];
-       for(int i=0;i<V;i++){
-           if(visited[i]==false){
-               if(dfs(i,-1,visited,adj)==true)return true;
-           }
-       }
-       return false;
-    }
-    private boolean dfs(int node,int parent,boolean[]visited,ArrayList<ArrayList<Integer>> adj){
-        visited[node]=true;
-        for(int it:adj.get(node)){
-            if(visited[it]==false){
-                if(dfs(it,node,visited,adj)==true)return true;
-            }else if(it!=parent)return true;
+        int[]vis=new int[V+1];
+        
+        for(int i=0;i<V;i++){
+            if(vis[i]==0){
+                if(hasCycle(i,vis,adj))return true;
+            }
         }
         return false;
     }
-   
+    public boolean hasCycle(int node,int[]vis, ArrayList<ArrayList<Integer>> adj){
+        Queue<int[]>q=new LinkedList<>();
+        q.add(new int[]{node,-1});
+        vis[node]=1;
+        while(!q.isEmpty()){
+            int[]arr=q.poll();
+            int child=arr[0],parent=arr[1];
+            for(int temp:adj.get(child)){
+                if(vis[temp]==0){
+                    q.add(new int[]{temp,child});
+                    vis[temp]=1;
+                }else if(temp!=parent){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 }
