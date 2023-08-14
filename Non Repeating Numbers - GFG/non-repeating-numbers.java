@@ -40,26 +40,19 @@ class Solution
     public int[] singleNumber(int[] nums)
     {
         // Code here
-        
-        int max = Arrays.stream(nums).max().getAsInt();
-        int[] hash = new int[max + 1];
-        
-        for (int num : nums) {
-            hash[num]++;
+        int max=nums[0];
+        for(int num:nums)max=Math.max(num,max);
+        int[]hash=new int[max+1];
+        int cnt=0;
+        for(int i=0;i<nums.length;i++){
+            hash[nums[i]]++;
+            if(hash[nums[i]]>1)cnt++;
         }
-        
-        ArrayList<Integer> list = new ArrayList<>();
-        for (int num : nums) {
-            if (hash[num] == 1) {
-                list.add(num);
-            }
-        }
-        
-        int[] ans = new int[list.size()];
-        for (int i = 0; i < list.size(); i++) {
-            ans[i] = list.get(i);
-        }
-        Arrays.sort(ans);
-        return ans;
+        int size=nums.length-(2*cnt);
+        // System.out.println(size);
+        int[]result=new int[size];
+        int idx=0;
+        for(int i=0;i<hash.length;i++)if(hash[i]==1)result[idx++]=i;
+        return result;
     }
 }
