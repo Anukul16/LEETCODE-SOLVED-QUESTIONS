@@ -38,10 +38,13 @@ public class Main {
 class Solution {
     int count(int[] arr, int n, int x) {
         // code here
-        int count=0;
+        int max=Integer.MIN_VALUE;
+        for(int num:arr)max=Math.max(num,max);
+        int[]hash=new int[max+1];
         for(int i=0;i<n;i++){
-            if(arr[i]==x)count++;
+            hash[arr[i]]++;
         }
-        return count;
+        // System.out.println(Arrays.toString(hash));
+        return x>=hash.length ? 0 : hash[x];
     }
 }
