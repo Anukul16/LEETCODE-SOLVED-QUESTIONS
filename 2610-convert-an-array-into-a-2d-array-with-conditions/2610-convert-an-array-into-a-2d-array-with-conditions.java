@@ -1,18 +1,33 @@
 class Solution {
     public List<List<Integer>> findMatrix(int[] nums) {
-        HashMap<Integer,Integer>map=new HashMap<>();
-        int n=0;
-        for(int i=0;i<nums.length;i++){
-            map.put(nums[i],map.getOrDefault(nums[i],0)+1);
-            n=Math.max(n,map.get(nums[i]));
-        }
-        List<List<Integer>>ans=new ArrayList<>();
-        for(int i=0;i<n;i++)ans.add(new ArrayList<>());
-        for(Map.Entry<Integer,Integer>entry:map.entrySet()){
-            for(int i=0;i<entry.getValue();i++){
-                ans.get(i).add(entry.getKey());
+        List<List<Integer>> ans = new ArrayList<>();
+
+        HashMap<Integer, Integer> map = new HashMap<>();
+        for (int x : nums)
+            map.put(x, map.getOrDefault(x, 0) + 1);
+        PriorityQueue<Integer> pq = new PriorityQueue<>(
+                (a, b) -> map.get(a) == map.get(b) ? b - a : map.get(b) - map.get(a));
+
+        pq.addAll(map.keySet());
+
+        while (!pq.isEmpty()) {
+            int size = pq.size();
+            List<Integer> temp = new ArrayList<>();
+            for (int i = 0; i < size; i++) {
+                int curr = pq.poll();
+                temp.add(curr);
+                if (map.get(curr) == 1) {
+                    map.remove(curr);
+                } else {
+                    map.put(curr, map.get(curr) - 1);
+                }
+
             }
+            ans.add(temp);
+            pq.addAll(map.keySet());
         }
-    return ans;
+
+        return ans;
     }
+
 }
